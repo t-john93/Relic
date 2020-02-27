@@ -3,13 +3,19 @@ use ggez::event;
 use ggez::graphics;
 use ggez::nalgebra as na;
 
+mod resources;
+
 struct MainState {
     pos_x: f32,
+    resources: resources::Resources,
 }
 
 impl MainState {
-    fn new() -> ggez::GameResult<MainState> {
-        let s = MainState { pos_x: 0.0 };
+    fn new(ctx: &mut ggez::Context) -> ggez::GameResult<MainState> {
+        let s = MainState {
+            pos_x: 0.0,
+            resources: resources::Resources::new(ctx),
+        };
         Ok(s)
     }
 }
@@ -31,6 +37,8 @@ impl event::EventHandler for MainState {
             2.0,
             graphics::WHITE,
         )?;
+
+
         graphics::draw(ctx, &circle, (na::Point2::new(0.0, 0.0),))?;
 
         graphics::present(ctx)?;
@@ -38,9 +46,9 @@ impl event::EventHandler for MainState {
     }
 }
 
-pub fn main() -> ggez::GameResult { 
+pub fn main() -> ggez::GameResult {
     let cb = ggez::ContextBuilder::new("super_simple", "ggez");
     let (ctx, event_loop) = &mut cb.build()?;
-    let state = &mut MainState::new()?;
+    let state = &mut MainState::new(ctx)?;
     event::run(ctx, event_loop, state)
 }

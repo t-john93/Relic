@@ -1,22 +1,25 @@
 use ggez::{
     Context,
     graphics::{ 
-//        Font,
         Image,
-//        spritebatch::SpriteBatch,
-    }
+    },
 };
 
 pub struct Resources {
-    pub character_sprite: Image,
+    pub character_sprite: Vec<Image>,
 }
 
 impl Resources {
     pub fn new(ctx: &mut Context) -> Resources {
-        let character_sprite = Image::new(ctx, "/images/character_sprite.png").unwrap();
+        
+        let mut resources: Resources = Resources {
+            character_sprite: Vec::new(),
+        }; 
 
-        Resources {
-            character_sprite: character_sprite.clone(),
-        }
+        resources.character_sprite.insert(0, Image::new(ctx, "/images/character_sprite_right.png").unwrap());
+        resources.character_sprite.insert(1, Image::new(ctx, "/images/character_sprite_left.png").unwrap());
+        resources.character_sprite.insert(2, Image::new(ctx, "/images/character_sprite_jump.png").unwrap());
+
+        return resources;
     }
 }

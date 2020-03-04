@@ -5,18 +5,20 @@ use graphics::Rect;
 use std::env;
 use std::path;
 
+// mod engine;
+
 struct MainState {
-    pos_x: f32,
-    pos_y: f32,
-    velocity_x: f32,
-    velocity_y: f32,
+    x_pos: f32,
+    y_pos: f32,
+    x_velocity: f32,
+    y_velocity: f32,
     gravity: f32,
     grounded: bool,
 }
 
 impl MainState {
     fn new() -> GameResult<MainState> {
-        let s = MainState {pos_x: 100.0, pos_y: 200.0, velocity_x: 3.0, velocity_y: 0.0, gravity: 0.5, grounded: false};
+        let s = MainState {x_pos: 100.0, y_pos: 200.0, x_velocity: 3.0, y_velocity: 0.0, gravity: 0.5, grounded: false};
         Ok(s)
     }
 }
@@ -24,20 +26,19 @@ impl MainState {
 impl EventHandler for MainState {
 
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
-
-        self.pos_x += self.velocity_x;
-        self.velocity_y += self.gravity;
-
-        if self.pos_y > 500.0 {
-            self.pos_y = 500.0;
-            self.velocity_y = 0.0;
+        self.x_pos += self.x_velocity;
+        self.y_velocity += self.gravity;
+        if self.y_pos > 500.0 {
+            self.y_pos = 500.0;
+            self.y_velocity = 0.0;
             self.grounded = true;
         }
+        self.y_pos += self.y_velocity;
+        if self.x_pos < 50.0 || self.x_pos > 750.0 { self.x_velocity *= -1.0 }
 
-        self.pos_y += self.velocity_y;
-        
-
-        if self.pos_x < 50.0 || self.pos_x > 750.0 { self.velocity_x *= -1.0 }
+        // BROKEN
+        // engine::get_x_pos(&self);
+        // engine::get_y_pos(self.y_pos, self.y_velocity, self.gravity, self.grounded);
 
         Ok(())
     }
@@ -47,7 +48,7 @@ impl EventHandler for MainState {
             KeyCode::Space => {
 
                 if self.grounded {
-                    self.velocity_y = -12.0;
+                    self.y_velocity = -12.0;
                     self.grounded = false;
                 }
             }
@@ -67,7 +68,7 @@ impl EventHandler for MainState {
         let circle = graphics::Mesh::new_circle(
             ctx,
             graphics::DrawMode::fill(),
-            na::Point2::new(self.pos_x, self.pos_y),
+            na::Point2::new(self.x_pos, self.y_pos),
             20.0,
             0.5,
             graphics::BLACK,

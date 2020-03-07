@@ -16,7 +16,9 @@ pub struct PlayerState {
 impl PlayerState {
     fn new(ctx: &mut Context) -> GameResult<PlayerState> {
         let s = PlayerState {
-            player_physics: engine::Engine::construct_new(100.0, 200.0, 3.0, 0.0, 0.5, false),
+            player_physics: engine::Engine::construct_new(
+                100.0, 200.0, 3.0, 0.0, 0.5, 1.0, false, false,
+            ),
             map_model: graphics::Rect::new(0.0, 520.0, 800.0, 80.0),
             resources: view::Resources::new(ctx),
         };
@@ -26,10 +28,14 @@ impl PlayerState {
 
 impl EventHandler for PlayerState {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
-        self.player_physics.check_wall(self.map_model);
-        self.player_physics.get_x_pos();
-        self.player_physics.get_y_pos();
         self.player_physics.check_ground(self.map_model);
+        self.player_physics.sliding = self.player_physics.check_wall_slide(self.map_model);
+        if !self.player_physics.sliding {
+            self.player_physics.check_turnaround(self.map_model);
+            self.player_physics.get_x_pos();
+        }
+        self.player_physics.get_y_pos();
+        // self.player_physics.check_ground(self.map_model);
         Ok(())
     }
 
@@ -46,6 +52,7 @@ impl EventHandler for PlayerState {
                     self.player_physics.y_velocity = -12.0;
                     self.player_physics.grounded = false;
                 }
+                // Check if wall slide
             }
             KeyCode::Escape => event::quit(ctx),
             _ => (),

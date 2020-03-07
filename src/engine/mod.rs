@@ -9,8 +9,8 @@ pub struct Engine {
     pub grounded: bool,
 }
 
-impl Engine{
-    pub fn construct_new(x: f32,y: f32,xv: f32,yv: f32,g: f32,on_ground: bool) -> Engine {
+impl Engine {
+    pub fn construct_new(x: f32, y: f32, xv: f32, yv: f32, g: f32, on_ground: bool) -> Engine {
         let engine = Engine {
             x_pos: x,
             y_pos: y,
@@ -33,10 +33,14 @@ impl Engine{
         self.y_pos += self.y_velocity;
     }
     pub fn check_wall(&mut self, _map: Rect) {
-        if self.x_pos < 20.0 || self.x_pos > 780.0 { self.x_velocity *= -1.0; }
+        if self.x_pos < 20.0 || self.x_pos > 780.0 {
+            self.x_velocity *= -1.0;
+        }
     }
     pub fn check_ground(&mut self, map: Rect) -> bool {
-        if self.y_pos >= map.top() { self.grounded = true; }
+        if self.y_pos >= map.top() {
+            self.grounded = true;
+        }
         self.grounded
     }
 }

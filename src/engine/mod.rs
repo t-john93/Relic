@@ -1,11 +1,12 @@
 use ggez::graphics::Rect;
 
 // Make constants for physics values
-const MIN_X_POS: f32 = 20.0;
-const MAX_X_POS: f32 = 780.0;
-const MIN_Y_POS: f32 = 500.0;
-const X_VELOCITY: f32 = 3.0;
-const GRAVITY: f32 = 0.5;
+pub const MIN_X_POS: f32 = 20.0;
+pub const MAX_X_POS: f32 = 780.0;
+pub const MIN_Y_POS: f32 = 500.0;
+pub const X_VELOCITY: f32 = 3.0;
+pub const GRAVITY: f32 = 0.5;
+pub const DIRECTION: f32 = 1.0;
 
 pub struct Engine {
     pub x_pos: f32,
@@ -73,7 +74,7 @@ impl Engine {
             self.x_velocity = 0.0;
             return true;
         }
-        self.gravity = GRAVITY;
+        // self.gravity = GRAVITY;
         return false;
     }
 

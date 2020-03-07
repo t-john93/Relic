@@ -17,7 +17,14 @@ impl PlayerState {
     fn new(ctx: &mut Context) -> GameResult<PlayerState> {
         let s = PlayerState {
             player_physics: engine::Engine::construct_new(
-                100.0, 200.0, 3.0, 0.0, 0.5, 1.0, false, false,
+                100.0,
+                200.0,
+                engine::X_VELOCITY,
+                0.0,
+                engine::GRAVITY,
+                engine::DIRECTION,
+                false,
+                false,
             ),
             map_model: graphics::Rect::new(0.0, 520.0, 800.0, 80.0),
             resources: view::Resources::new(ctx),
@@ -35,7 +42,6 @@ impl EventHandler for PlayerState {
             self.player_physics.get_x_pos();
         }
         self.player_physics.get_y_pos();
-        // self.player_physics.check_ground(self.map_model);
         Ok(())
     }
 

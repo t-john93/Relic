@@ -6,6 +6,7 @@ pub const MAX_X_POS: f32 = 780.0;
 pub const MIN_Y_POS: f32 = 500.0;
 pub const X_VELOCITY: f32 = 3.0;
 pub const GRAVITY: f32 = 0.5;
+pub const FREEFALL: f32 = -12.0;
 pub const DIRECTION: f32 = 1.0;
 
 pub struct Engine {
@@ -71,10 +72,11 @@ impl Engine {
             && ((self.x_pos > MIN_X_POS && self.x_pos < (MIN_X_POS + 5.0))
                 || (self.x_pos > (MAX_X_POS - 5.0) && self.x_pos < MAX_X_POS))
         {
-            self.x_velocity = 0.0;
+            if !self.sliding {
+                self.x_velocity = 0.0;
+            }
             return true;
         }
-        // self.gravity = GRAVITY;
         return false;
     }
 
@@ -82,7 +84,7 @@ impl Engine {
         if self.y_pos >= map.top() {
             self.grounded = true;
         }
-        if self.x_velocity == 0.0 {
+        if self.grounded && self.x_velocity == 0.0 {
             self.turn_and_run();
         }
         self.grounded

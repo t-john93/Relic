@@ -39,8 +39,8 @@ impl EventHandler for PlayerState {
         self.player_physics.sliding = self.player_physics.check_wall_slide(self.map_model);
         if !self.player_physics.sliding {
             self.player_physics.check_turnaround(self.map_model);
-            self.player_physics.get_x_pos();
         }
+        self.player_physics.get_x_pos();
         self.player_physics.get_y_pos();
         Ok(())
     }
@@ -55,10 +55,14 @@ impl EventHandler for PlayerState {
         match keycode {
             KeyCode::Space => {
                 if self.player_physics.grounded {
-                    self.player_physics.y_velocity = -12.0;
+                    self.player_physics.y_velocity = engine::FREEFALL;
                     self.player_physics.grounded = false;
                 }
-                // Check if wall slide
+
+                if self.player_physics.sliding {
+                    self.player_physics.turn_and_run();
+                    self.player_physics.y_velocity = engine::FREEFALL;
+                }
             }
             KeyCode::Escape => event::quit(ctx),
             _ => (),

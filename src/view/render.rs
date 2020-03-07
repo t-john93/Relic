@@ -11,8 +11,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         graphics::BLACK,
     )?;
 
-    // Draw player movement
-    if player_state.player_physics.x_velocity > 0.0 {
+    if player_state.player_physics.direction > 0.0 {
         graphics::draw(
             ctx,
             &player_state.resources.character_sprite[0],
@@ -32,7 +31,6 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         )?;
     }
 
-    // Draw the ground
     graphics::draw(ctx, &ground, (na::Point2::new(0.0, 0.0),))?;
     graphics::present(ctx)?;
     Ok(())

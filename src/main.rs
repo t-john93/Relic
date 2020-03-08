@@ -1,15 +1,18 @@
 use event::{run, EventHandler, KeyCode, KeyMods};
-use ggez::{conf, event, graphics, Context, ContextBuilder, GameResult};
+use ggez::{conf, event, Context, ContextBuilder, GameResult};
 use std::env;
 use std::path;
 
 mod engine;
 mod view;
+mod map;
+
+pub const WIN_WIDTH: f32 = 1000.0;
+pub const WIN_HEIGHT: f32 = 600.0;
 
 pub struct PlayerState {
     player_physics: engine::Engine,
-    // map_model: [graphics::Rect; 20],     // TODO return array of map polygons
-    map_model: Vec<graphics::Rect>,
+    map_model: map::Map,
     resources: view::Resources,
 }
 
@@ -32,7 +35,7 @@ impl PlayerState {
                 false,
                 false,
             ),
-            map_model,
+            map_model: map::Map::construct_new(),
             resources: view::Resources::new(ctx),
         };
         Ok(s)
@@ -81,7 +84,6 @@ impl EventHandler for PlayerState {
 }
 
 pub fn main() -> GameResult {
-    let window: [f32; 2] = [1000.0, 600.0];
     let resource_dir = if let Ok(manifest_dir) = env::var("CARGO_MANIFEST_DIR") {
         let mut path = path::PathBuf::from(manifest_dir);
         path.push("resources");
@@ -92,7 +94,7 @@ pub fn main() -> GameResult {
     let cb = ContextBuilder::new("relic", "ggez")
         .add_resource_path(resource_dir)
         .window_setup(conf::WindowSetup::default().title("Relic"))
-        .window_mode(conf::WindowMode::default().dimensions(window[0], window[1]));
+        .window_mode(conf::WindowMode::default().dimensions(WIN_WIDTH, WIN_HEIGHT));
     let (ctx, event_loop) = &mut cb.build()?;
     let state = &mut PlayerState::new(ctx)?;
     run(ctx, event_loop, state)

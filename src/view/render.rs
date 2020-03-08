@@ -7,25 +7,25 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
     let ground = graphics::Mesh::new_rectangle(
         ctx,
         graphics::DrawMode::fill(),
-        player_state.map_model[0],
+        player_state.map_model.ground,
         graphics::BLACK,
-    )?;
+        )?;
     let ceiling = graphics::Mesh::new_rectangle(
         ctx,
         graphics::DrawMode::fill(),
-        player_state.map_model[1],
-        graphics::BLACK,
-    )?;
-    let r_wall = graphics::Mesh::new_rectangle(
-        ctx,
-        graphics::DrawMode::fill(),
-        player_state.map_model[2],
+        player_state.map_model.ceiling,
         graphics::BLACK,
     )?;
     let l_wall = graphics::Mesh::new_rectangle(
         ctx,
         graphics::DrawMode::fill(),
-        player_state.map_model[3],
+        player_state.map_model.l_wall,
+        graphics::BLACK,
+    )?;
+    let r_wall = graphics::Mesh::new_rectangle(
+        ctx,
+        graphics::DrawMode::fill(),
+        player_state.map_model.r_wall,
         graphics::BLACK,
     )?;
 

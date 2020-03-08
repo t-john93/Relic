@@ -10,6 +10,24 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         player_state.map_model,
         graphics::BLACK,
     )?;
+    let ceiling = graphics::Mesh::new_rectangle(
+        ctx,
+        graphics::DrawMode::fill(),
+        graphics::Rect::new(0.0, 0.0, 820.0, 50.0 ),
+        graphics::BLACK,
+    )?;
+     let R_wall = graphics::Mesh::new_rectangle(
+        ctx,
+        graphics::DrawMode::fill(),
+        graphics::Rect::new(820.0, 0.0, 50.0, 800.0),
+        graphics::BLACK,
+    )?;   
+     let L_wall = graphics::Mesh::new_rectangle(
+        ctx,
+        graphics::DrawMode::fill(),
+        graphics::Rect::new(0.0, 0.0, 40.0, 800.0),
+        graphics::BLACK,
+    )?;   
 
     if player_state.player_physics.direction > 0.0 {
         graphics::draw(
@@ -32,6 +50,9 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
     }
 
     graphics::draw(ctx, &ground, (na::Point2::new(0.0, 0.0),))?;
+    graphics::draw(ctx, &ceiling, (na::Point2::new(0.0, 0.0),))?;
+    graphics::draw(ctx, &L_wall, (na::Point2::new(0.0, 0.0),))?;
+    graphics::draw(ctx, &R_wall, (na::Point2::new(0.0, 0.0),))?;
     graphics::present(ctx)?;
     Ok(())
 }

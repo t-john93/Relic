@@ -26,7 +26,7 @@ impl PlayerState {
                 false,
                 false,
             ),
-            map_model: graphics::Rect::new(0.0, 520.0, 800.0, 80.0),
+            map_model: graphics::Rect::new(0.0, 520.0, 820.0, 80.0),
             resources: view::Resources::new(ctx),
         };
         Ok(s)

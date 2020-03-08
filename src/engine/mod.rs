@@ -1,4 +1,4 @@
-use ggez::graphics::Rect;
+use super::map;
 
 // Make constants for physics values
 pub const MIN_X_POS: f32 = 20.0;
@@ -61,13 +61,13 @@ impl Engine {
         }
     }
 
-    pub fn check_turnaround(&mut self, _map: Rect) {
+    pub fn check_turnaround(&mut self, _map: map::Map) {
         if self.x_pos < MIN_X_POS || self.x_pos > MAX_X_POS {
             self.turn_and_run();
         }
     }
 
-    pub fn check_wall_slide(&mut self, _map: Rect) -> bool {
+    pub fn check_wall_slide(&mut self, _map: map::Map) -> bool {
         if (!self.grounded)
             && ((self.x_pos > MIN_X_POS && self.x_pos < (MIN_X_POS + 5.0))
                 || (self.x_pos > (MAX_X_POS - 5.0) && self.x_pos < MAX_X_POS))
@@ -80,8 +80,8 @@ impl Engine {
         return false;
     }
 
-    pub fn check_ground(&mut self, map: Rect) -> bool {
-        if self.y_pos >= map.top() {
+    pub fn check_ground(&mut self, map: map::Map) -> bool {
+        if self.y_pos >= map.ground.top() {
             self.grounded = true;
         }
         if self.grounded && self.x_velocity == 0.0 {

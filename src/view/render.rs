@@ -27,7 +27,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         graphics::DrawMode::fill(),
         player_state.map_model.r_wall,
         graphics::BLACK,
-    )?;   
+    )?;
 
     if player_state.player_physics.direction > 0.0 {
         graphics::draw(

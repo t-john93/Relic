@@ -16,13 +16,13 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         player_state.map_model[1],
         graphics::BLACK,
     )?;
-    let R_wall = graphics::Mesh::new_rectangle(
+    let r_wall = graphics::Mesh::new_rectangle(
         ctx,
         graphics::DrawMode::fill(),
         player_state.map_model[2],
         graphics::BLACK,
     )?;
-    let L_wall = graphics::Mesh::new_rectangle(
+    let l_wall = graphics::Mesh::new_rectangle(
         ctx,
         graphics::DrawMode::fill(),
         player_state.map_model[3],
@@ -48,11 +48,11 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
             ),),
         )?;
     }
-    
+
     graphics::draw(ctx, &ground, (na::Point2::new(0.0, 0.0),))?;
     graphics::draw(ctx, &ceiling, (na::Point2::new(0.0, 0.0),))?;
-    graphics::draw(ctx, &L_wall, (na::Point2::new(0.0, 0.0),))?;
-    graphics::draw(ctx, &R_wall, (na::Point2::new(0.0, 0.0),))?;
+    graphics::draw(ctx, &l_wall, (na::Point2::new(0.0, 0.0),))?;
+    graphics::draw(ctx, &r_wall, (na::Point2::new(0.0, 0.0),))?;
     graphics::present(ctx)?;
     Ok(())
 }

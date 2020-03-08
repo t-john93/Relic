@@ -9,12 +9,18 @@ mod view;
 pub struct PlayerState {
     player_physics: engine::Engine,
     // map_model: [graphics::Rect; 20],     // TODO return array of map polygons
-    map_model: graphics::Rect,
+    map_model: Vec<graphics::Rect>,
     resources: view::Resources,
 }
 
 impl PlayerState {
     fn new(ctx: &mut Context) -> GameResult<PlayerState> {
+        let map_model = vec![
+            graphics::Rect::new(0.0, 520.0, 820.0, 80.0),
+            graphics::Rect::new(0.0, 0.0, 820.0, 50.0),
+            graphics::Rect::new(820.0, 0.0, 50.0, 800.0),
+            graphics::Rect::new(0.0, 0.0, 40.0, 800.0),
+        ];
         let s = PlayerState {
             player_physics: engine::Engine::construct_new(
                 100.0,
@@ -26,7 +32,7 @@ impl PlayerState {
                 false,
                 false,
             ),
-            map_model: graphics::Rect::new(0.0, 520.0, 820.0, 80.0),
+            map_model,
             resources: view::Resources::new(ctx),
         };
         Ok(s)
@@ -35,10 +41,10 @@ impl PlayerState {
 
 impl EventHandler for PlayerState {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
-        self.player_physics.check_ground(self.map_model);
-        self.player_physics.sliding = self.player_physics.check_wall_slide(self.map_model);
+        self.player_physics.check_ground(self.map_model[0]);
+        self.player_physics.sliding = self.player_physics.check_wall_slide(self.map_model[0]);
         if !self.player_physics.sliding {
-            self.player_physics.check_turnaround(self.map_model);
+            self.player_physics.check_turnaround(self.map_model[0]);
         }
         self.player_physics.get_x_pos();
         self.player_physics.get_y_pos();

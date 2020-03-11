@@ -42,7 +42,10 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         graphics::draw(ctx, &obs , (na::Point2::new(0.0, 0.0),))?;
         i = i + 1;
     }
-
+    
+    //Drawing the star
+    graphics::draw(ctx, &player_state.resources.star, (na::Point2::new(player_state.obstacles.star_location.0, player_state.obstacles.star_location.1),))?;
+    // graphics::draw(ctx, &player_state.resources.star, player_state.obstacles.star_location,)?;
 
     if player_state.player_physics.direction > 0.0 {
         graphics::draw(

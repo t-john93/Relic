@@ -13,7 +13,9 @@ pub const WIN_HEIGHT: f32 = 600.0;
 pub struct PlayerState {
     player_physics: engine::Engine,
     map_model: map::Map,
+    obstacles: map::Obstacles,
     resources: view::Resources,
+
 }
 
 impl PlayerState {
@@ -31,6 +33,8 @@ impl PlayerState {
             ),
             map_model: map::Map::construct_new(),
             resources: view::Resources::new(ctx),
+            obstacles: map::Obstacles::map1(),
+            
         };
         Ok(s)
     }

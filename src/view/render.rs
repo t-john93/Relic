@@ -9,7 +9,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         graphics::DrawMode::fill(),
         player_state.map_model.ground,
         graphics::BLACK,
-        )?;
+    )?;
     let ceiling = graphics::Mesh::new_rectangle(
         ctx,
         graphics::DrawMode::fill(),
@@ -28,6 +28,21 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         player_state.map_model.r_wall,
         graphics::BLACK,
     )?;
+
+    //Drawing the Obstacles
+    let mut i = 0;
+    while i < player_state.obstacles.rectangles.len() {
+        let obs = graphics::Mesh::new_rectangle(
+            ctx,
+            graphics::DrawMode::fill(),
+            // rect,
+            player_state.obstacles.rectangles[i],
+            graphics::BLACK,
+        )?;
+        graphics::draw(ctx, &obs , (na::Point2::new(0.0, 0.0),))?;
+        i = i + 1;
+    }
+
 
     if player_state.player_physics.direction > 0.0 {
         graphics::draw(

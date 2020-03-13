@@ -31,30 +31,18 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         graphics::BLACK,
     )?;
 
-    //Drawing the Obstacles
+    //Drawing the platforms
     let mut i = 0;
-    while i < player_state.obstacles.rectangles.len() {
+    while i < player_state.map_model.platforms.len() {
         let obs = graphics::Mesh::new_rectangle(
             ctx,
             graphics::DrawMode::fill(),
-            // rect,
-            player_state.obstacles.rectangles[i],
+            player_state.map_model.platforms[i],
             graphics::BLACK,
         )?;
         graphics::draw(ctx, &obs, (na::Point2::new(0.0, 0.0),))?;
         i = i + 1;
     }
-
-    //Drawing the star
-    graphics::draw(
-        ctx,
-        &player_state.resources.star,
-        (na::Point2::new(
-            player_state.obstacles.star_location.0,
-            player_state.obstacles.star_location.1,
-        ),),
-    )?;
-    // graphics::draw(ctx, &player_state.resources.star, player_state.obstacles.star_location,)?;
 
     if player_state.player_physics.direction > 0.0 {
         graphics::draw(
@@ -76,10 +64,33 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         )?;
     }
 
+    // Draw Border
     graphics::draw(ctx, &ground, (na::Point2::new(0.0, 0.0),))?;
     graphics::draw(ctx, &ceiling, (na::Point2::new(0.0, 0.0),))?;
     graphics::draw(ctx, &l_wall, (na::Point2::new(0.0, 0.0),))?;
     graphics::draw(ctx, &r_wall, (na::Point2::new(0.0, 0.0),))?;
+    graphics::present(ctx)?;
+
+    // Draw Star
+    graphics::draw(
+        ctx,
+        &player_state.resources.star,
+        (na::Point2::new(
+            player_state.map_model.star_location.0,
+            player_state.map_model.star_location.1,
+        ),),
+    )?;
+    Ok(())
+}
+
+pub fn render_win(player_state: &mut PlayerState, ctx: &mut Context) -> GameResult {
+    graphics::clear_shader(ctx);
+
+    graphics::draw(
+        ctx,
+        &player_state.resources.game_over,
+        (na::Point2::new(0.0, 0.0),),
+    )?;
     graphics::present(ctx)?;
     Ok(())
 }

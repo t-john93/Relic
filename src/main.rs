@@ -29,6 +29,7 @@ impl PlayerState {
                 engine::DIRECTION,
                 false,
                 false,
+                32.0,
             ),
             map_model: map::Map::construct_new(),
             resources: view::Resources::new(ctx),

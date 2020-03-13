@@ -1,7 +1,7 @@
 use super::map;
 
-pub const MIN_X_POS: f32 = 20.0;
-pub const MAX_X_POS: f32 = 780.0;
+// pub const MIN_X_POS: f32 = 20.0;
+// pub const MAX_X_POS: f32 = 780.0;
 pub const MIN_Y_POS: f32 = 500.0;
 pub const X_VELOCITY: f32 = 3.0;
 pub const GRAVITY: f32 = 0.5;
@@ -17,6 +17,7 @@ pub struct Engine {
     pub direction: f32,
     pub grounded: bool,
     pub sliding: bool,
+    pub player_offset: f32,
 }
 
 impl Engine {
@@ -29,6 +30,7 @@ impl Engine {
         dir: f32,
         on_ground: bool,
         slide: bool,
+        offset: f32,
     ) -> Engine {
         let engine = Engine {
             x_pos: x,
@@ -39,6 +41,7 @@ impl Engine {
             direction: dir,
             grounded: on_ground,
             sliding: slide,
+            player_offset: offset,
         };
         engine
     }
@@ -60,18 +63,20 @@ impl Engine {
         self.y_pos += self.gravity;
     }
 
-    pub fn check_turnaround(&mut self, _map: map::Map) {
-        if self.x_pos < MIN_X_POS || self.x_pos > MAX_X_POS {
+    pub fn check_turnaround(&mut self, map: map::Map) {
+        if self.x_pos < map.l_wall.x + 20.0 || self.x_pos > map.r_wall.x - 20.0 {
             self.turn_and_run();
         }
     }
 
-    pub fn check_wall_slide(&mut self, _map: map::Map) -> bool {
+    pub fn check_wall_slide(&mut self, map: map::Map) -> bool {
         if self.sliding {
             return true;
         } else {
-            if (self.x_pos > MIN_X_POS && self.x_pos < (MIN_X_POS + 5.0))
-                || (self.x_pos > (MAX_X_POS - 5.0) && self.x_pos < MAX_X_POS)
+            if (self.x_pos > (map.l_wall.x + (map.l_wall.w / 2.0))
+                && self.x_pos < ((map.l_wall.x + (map.l_wall.w / 2.0)) + 5.0))
+                || (self.x_pos > (map.r_wall.x - (map.r_wall.w / 2.0) - 15.0)
+                    && self.x_pos < map.r_wall.x - (map.r_wall.w / 2.0))
             {
                 if !self.sliding {
                     self.x_velocity = 0.0;
@@ -100,11 +105,11 @@ impl Engine {
         }
     }
 
-    pub fn check_lower_platform(&mut self, _map: map::Map) {
-        if self.x_pos <= 700.0 {
-            if (self.y_pos >= 300.0) && (self.y_pos <= 320.0) {
+    pub fn check_lower_platform(&mut self, map: map::Map) {
+        if self.x_pos <= map.platforms[0].w {
+            if (self.y_pos >= map.platforms[0].y) && (self.y_pos <= map.platforms[0].y + 20.0) {
                 self.grounded = true;
-                self.y_pos = 280.0;
+                self.y_pos = map.platforms[0].y - 20.0;
             }
         }
     }

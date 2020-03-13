@@ -1,8 +1,6 @@
 use crate::PlayerState;
 use ggez::{graphics, nalgebra as na, Context, GameResult};
 
-pub const PLAYER_Y_OFFSET: f32 = 32.0;
-
 pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameResult {
     graphics::clear(ctx, [0.1, 0.2, 0.3, 1.0].into());
 
@@ -62,7 +60,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
             &player_state.resources.character_sprite[0],
             (na::Point2::new(
                 player_state.player_physics.x_pos,
-                player_state.player_physics.y_pos - PLAYER_Y_OFFSET,
+                player_state.player_physics.y_pos - player_state.player_physics.player_offset,
             ),),
         )?;
     } else {
@@ -71,7 +69,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
             &player_state.resources.character_sprite[1],
             (na::Point2::new(
                 player_state.player_physics.x_pos,
-                player_state.player_physics.y_pos - PLAYER_Y_OFFSET,
+                player_state.player_physics.y_pos - player_state.player_physics.player_offset,
             ),),
         )?;
     }

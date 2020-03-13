@@ -74,3 +74,16 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
     graphics::present(ctx)?;
     Ok(())
 }
+
+
+
+pub fn render_win(player_state: &mut PlayerState, ctx: &mut Context) -> GameResult {
+    graphics::clear(ctx, [0.1, 0.2, 0.3, 1.0].into());
+
+    graphics::draw(
+        ctx,
+        &player_state.resources.game_over,
+        (na::Point2::new(500.0, 300.0),),
+    )?;
+    Ok(())
+}

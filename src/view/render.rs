@@ -29,7 +29,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         graphics::BLACK,
     )?;
 
-    //Drawing the Obstacles
+    //Drawing the platforms
     let mut i = 0;
     while i < player_state.map_model.platforms.len() {
         let obs = graphics::Mesh::new_rectangle(
@@ -71,5 +71,19 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
 
     // Draw Star
     graphics::draw(ctx, &player_state.resources.star, (na::Point2::new(player_state.map_model.star_location.0, player_state.map_model.star_location.1),))?;
+    Ok(())
+}
+
+
+
+pub fn render_win(player_state: &mut PlayerState, ctx: &mut Context) -> GameResult {
+    graphics::clear_shader(ctx);
+
+    graphics::draw(
+        ctx,
+        &player_state.resources.game_over,
+        (na::Point2::new(0.0, 0.0),),
+    )?;
+    graphics::present(ctx)?;
     Ok(())
 }

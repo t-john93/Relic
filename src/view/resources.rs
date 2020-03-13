@@ -3,6 +3,7 @@ use ggez::{graphics::Image, Context};
 pub struct Resources {
     pub character_sprite: Vec<Image>,
     pub star: Image,
+    pub game_over: Image,
 }
 
 impl Resources {
@@ -10,6 +11,7 @@ impl Resources {
         let mut resources: Resources = Resources {
             character_sprite: Vec::new(),
             star: Image::new(ctx, "/images/star.png").unwrap(),
+            game_over: Image::new(ctx, "/images/game_over.1.png").unwrap(),
         };
 
         resources.character_sprite.insert(

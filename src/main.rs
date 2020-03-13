@@ -14,6 +14,8 @@ pub struct PlayerState {
     player_physics: engine::Engine,
     map_model: map::Map,
     resources: view::Resources,
+    win: bool,
+
 
 }
 
@@ -32,6 +34,7 @@ impl PlayerState {
             ),
             map_model: map::Map::construct_new(),
             resources: view::Resources::new(ctx),
+            win: false,
         };
         Ok(s)
     }
@@ -46,6 +49,9 @@ impl EventHandler for PlayerState {
         }
         self.player_physics.get_x_pos();
         self.player_physics.get_y_pos();
+        if (self.player_physics.x_pos, self.player_physics.y_pos) == self.obstacles.star_location {
+            self.win = true;
+        }
         Ok(())
     }
 
@@ -74,7 +80,11 @@ impl EventHandler for PlayerState {
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult {
-        view::render_game(self, ctx)
+        if !self.win {
+            view::render_game(self, ctx)
+        } else {
+            view::render_win(self, ctx)
+        }
     }
 }
 

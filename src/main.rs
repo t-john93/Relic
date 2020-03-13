@@ -45,21 +45,21 @@ impl EventHandler for PlayerState {
 
         if self.player_physics.sliding {
             self.player_physics.get_sliding_y_pos();
-        }
-        else {
+        } else {
             self.player_physics.get_y_pos();
             self.player_physics.get_x_pos();
             self.player_physics.check_turnaround(self.map_model);
         }
 
-        if (self.player_physics.x_pos, self.player_physics.y_pos) == self.map_model.star_location {
+        if (self.player_physics.x_pos < self.map_model.star_location.x)
+            && (self.player_physics.y_pos <= self.map_model.star_location.y)
+        {
             self.win = true;
         }
 
         if self.player_physics.grounded {
             self.player_physics.sliding = false;
-        }
-        else {
+        } else {
             self.player_physics.sliding = self.player_physics.check_wall_slide(self.map_model);
         }
 

@@ -1,6 +1,5 @@
 use super::map;
 
-// Make constants for physics values
 pub const MIN_X_POS: f32 = 20.0;
 pub const MAX_X_POS: f32 = 780.0;
 pub const MIN_Y_POS: f32 = 500.0;
@@ -109,8 +108,6 @@ impl Engine {
             }
         }
     }
-
-    // pub fn check_upper_platform(&mut self, _map: map::Map) {}
 
     pub fn turn_and_run(&mut self) {
         self.direction *= -1.0;

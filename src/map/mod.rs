@@ -1,5 +1,4 @@
-use ggez::graphics;
-// use ggez::{graphics, nalgebra as na};
+use ggez::{graphics, nalgebra as na};
 
 #[derive(Clone, Copy)]
 pub struct Map {
@@ -8,7 +7,7 @@ pub struct Map {
     pub l_wall: graphics::Rect,
     pub r_wall: graphics::Rect,
     pub platforms: [graphics::Rect; 2],
-    pub star_location: (f32, f32), //Supposed to be a Point2, but having an errors
+    pub star_location: na::Point2<f32>,
 }
 
 impl Map {
@@ -23,8 +22,7 @@ impl Map {
                 graphics::Rect::new(0.0, 300.0, 700.0, 75.0),
                 graphics::Rect::new(0.0, 200.0, 100.0, 100.0),
             ],
-            star_location: (750.0, 477.0), //50, 150
-                                           // star_location: na::Point2::new(50.0, 100.0),
+            star_location: na::Point2::new(50.0, 150.0),
         };
         map
     }

@@ -6,6 +6,7 @@ pub const PLAYER_Y_OFFSET: f32 = 32.0;
 pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameResult {
     graphics::clear(ctx, [0.1, 0.2, 0.3, 1.0].into());
 
+    // Create border
     let ground = graphics::Mesh::new_rectangle(
         ctx,
         graphics::DrawMode::fill(),
@@ -31,7 +32,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         graphics::BLACK,
     )?;
 
-    //Drawing the platforms
+    // Draws the platforms
     let mut i = 0;
     while i < player_state.map_model.platforms.len() {
         let obs = graphics::Mesh::new_rectangle(
@@ -44,6 +45,17 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
         i = i + 1;
     }
 
+    // Draw the star
+    graphics::draw(
+        ctx,
+        &player_state.resources.star,
+        (na::Point2::new(
+            player_state.map_model.star_location.x,
+            player_state.map_model.star_location.y,
+        ),),
+    )?;
+
+    // Draw the character position
     if player_state.player_physics.direction > 0.0 {
         graphics::draw(
             ctx,
@@ -71,20 +83,11 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
     graphics::draw(ctx, &r_wall, (na::Point2::new(0.0, 0.0),))?;
     graphics::present(ctx)?;
 
-    // Draw Star
-    graphics::draw(
-        ctx,
-        &player_state.resources.star,
-        (na::Point2::new(
-            player_state.map_model.star_location.0,
-            player_state.map_model.star_location.1,
-        ),),
-    )?;
     Ok(())
 }
 
 pub fn render_win(player_state: &mut PlayerState, ctx: &mut Context) -> GameResult {
-    graphics::clear_shader(ctx);
+    graphics::clear(ctx, graphics::BLACK);
 
     graphics::draw(
         ctx,

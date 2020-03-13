@@ -43,7 +43,7 @@ impl Obstacles {
                 graphics::Rect::new(0.0, 300.0, 700.0, 75.0), //Lower block
                 graphics::Rect::new(0.0, 200.0, 100.0, 100.0),
             ].to_vec(),
-            star_location: (50.0, 150.0), 
+            star_location: (750.0, 477.0), //50, 150
             // star_location: na::Point2::new(50.0, 100.0),
         };
         map_1

@@ -83,10 +83,10 @@ impl EventHandler for PlayerState {
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult {
-        if self.win {
-            view::render_win(self, ctx)
-        } else {
+        if !self.win {
             view::render_game(self, ctx)
+        } else {
+            view::render_win(self, ctx)
         }
     }
 }

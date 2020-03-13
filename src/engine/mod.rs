@@ -50,15 +50,15 @@ impl Engine {
     }
 
     pub fn get_y_pos(&mut self) {
-        if self.sliding {
-            self.y_pos += self.gravity;
+        if self.grounded {
+            self.y_velocity = 0.0;
         } else {
-            if self.grounded {
-                self.y_pos = MIN_Y_POS;
-                self.y_velocity = 0.0;
-            }
             self.y_pos += self.y_velocity;
         }
+    }
+
+    pub fn get_sliding_y_pos(&mut self) {
+        self.y_pos += self.gravity;
     }
 
     pub fn check_turnaround(&mut self, _map: map::Map) {
@@ -68,27 +68,49 @@ impl Engine {
     }
 
     pub fn check_wall_slide(&mut self, _map: map::Map) -> bool {
-        if (!self.grounded)
-            && ((self.x_pos > MIN_X_POS && self.x_pos < (MIN_X_POS + 5.0))
-                || (self.x_pos > (MAX_X_POS - 5.0) && self.x_pos < MAX_X_POS))
-        {
-            if !self.sliding {
-                self.x_velocity = 0.0;
-            }
+        if self.sliding {
             return true;
+        } else {
+            if (self.x_pos > MIN_X_POS && self.x_pos < (MIN_X_POS + 5.0))
+                || (self.x_pos > (MAX_X_POS - 5.0) && self.x_pos < MAX_X_POS)
+            {
+                if !self.sliding {
+                    self.x_velocity = 0.0;
+                }
+                return true;
+            }
+            if (self.x_pos > 680.0 && self.x_pos < 685.0)
+                && (self.y_pos > 300.0 && self.y_pos < 350.0)
+            {
+                if !self.sliding {
+                    self.x_velocity = 0.0;
+                }
+                return true;
+            }
         }
         return false;
     }
 
-    pub fn check_ground(&mut self, map: map::Map) -> bool {
+    pub fn check_ground(&mut self, map: map::Map) {
         if self.y_pos >= map.ground.top() {
             self.grounded = true;
+            self.y_pos = MIN_Y_POS;
         }
         if self.grounded && self.x_velocity == 0.0 {
             self.turn_and_run();
         }
-        self.grounded
     }
+
+    pub fn check_lower_platform(&mut self, _map: map::Map) {
+        if self.x_pos <= 700.0 {
+            if (self.y_pos >= 300.0) && (self.y_pos <= 320.0) {
+                self.grounded = true;
+                self.y_pos = 280.0;
+            }
+        }
+    }
+
+    // pub fn check_upper_platform(&mut self, _map: map::Map) {}
 
     pub fn turn_and_run(&mut self) {
         self.direction *= -1.0;

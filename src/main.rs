@@ -4,8 +4,8 @@ use std::env;
 use std::path;
 
 mod engine;
-mod view;
 mod map;
+mod view;
 
 pub const WIN_WIDTH: f32 = 1000.0;
 pub const WIN_HEIGHT: f32 = 600.0;
@@ -15,15 +15,14 @@ pub struct PlayerState {
     map_model: map::Map,
     obstacles: map::Obstacles,
     resources: view::Resources,
-
 }
 
 impl PlayerState {
     fn new(ctx: &mut Context) -> GameResult<PlayerState> {
         let s = PlayerState {
             player_physics: engine::Engine::construct_new(
-                100.0,
-                200.0,
+                30.0,
+                400.0,
                 engine::X_VELOCITY,
                 0.0,
                 engine::GRAVITY,
@@ -34,7 +33,6 @@ impl PlayerState {
             map_model: map::Map::construct_new(),
             resources: view::Resources::new(ctx),
             obstacles: map::Obstacles::map1(),
-            
         };
         Ok(s)
     }
@@ -43,12 +41,24 @@ impl PlayerState {
 impl EventHandler for PlayerState {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         self.player_physics.check_ground(self.map_model);
-        self.player_physics.sliding = self.player_physics.check_wall_slide(self.map_model);
-        if !self.player_physics.sliding {
+        self.player_physics.check_lower_platform(self.map_model);
+
+        if self.player_physics.sliding {
+            self.player_physics.get_sliding_y_pos();
+        }
+        else {
+            self.player_physics.get_y_pos();
+            self.player_physics.get_x_pos();
             self.player_physics.check_turnaround(self.map_model);
         }
-        self.player_physics.get_x_pos();
-        self.player_physics.get_y_pos();
+
+        if self.player_physics.grounded {
+            self.player_physics.sliding = false;
+        }
+        else {
+            self.player_physics.sliding = self.player_physics.check_wall_slide(self.map_model);
+        }
+
         Ok(())
     }
 
@@ -67,6 +77,7 @@ impl EventHandler for PlayerState {
                 }
 
                 if self.player_physics.sliding {
+                    self.player_physics.sliding = false;
                     self.player_physics.turn_and_run();
                     self.player_physics.y_velocity = engine::FREEFALL;
                 }

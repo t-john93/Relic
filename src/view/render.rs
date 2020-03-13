@@ -1,6 +1,8 @@
 use crate::PlayerState;
 use ggez::{graphics, nalgebra as na, Context, GameResult};
 
+pub const PLAYER_Y_OFFSET: f32 = 32.0;
+
 pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameResult {
     graphics::clear(ctx, [0.1, 0.2, 0.3, 1.0].into());
 
@@ -39,12 +41,19 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
             player_state.obstacles.rectangles[i],
             graphics::BLACK,
         )?;
-        graphics::draw(ctx, &obs , (na::Point2::new(0.0, 0.0),))?;
+        graphics::draw(ctx, &obs, (na::Point2::new(0.0, 0.0),))?;
         i = i + 1;
     }
-    
+
     //Drawing the star
-    graphics::draw(ctx, &player_state.resources.star, (na::Point2::new(player_state.obstacles.star_location.0, player_state.obstacles.star_location.1),))?;
+    graphics::draw(
+        ctx,
+        &player_state.resources.star,
+        (na::Point2::new(
+            player_state.obstacles.star_location.0,
+            player_state.obstacles.star_location.1,
+        ),),
+    )?;
     // graphics::draw(ctx, &player_state.resources.star, player_state.obstacles.star_location,)?;
 
     if player_state.player_physics.direction > 0.0 {
@@ -53,7 +62,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
             &player_state.resources.character_sprite[0],
             (na::Point2::new(
                 player_state.player_physics.x_pos,
-                player_state.player_physics.y_pos - 32.0,
+                player_state.player_physics.y_pos - PLAYER_Y_OFFSET,
             ),),
         )?;
     } else {
@@ -62,7 +71,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
             &player_state.resources.character_sprite[1],
             (na::Point2::new(
                 player_state.player_physics.x_pos,
-                player_state.player_physics.y_pos - 32.0,
+                player_state.player_physics.y_pos - PLAYER_Y_OFFSET,
             ),),
         )?;
     }

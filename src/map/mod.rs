@@ -9,8 +9,6 @@ pub struct Map {
     pub r_wall: graphics::Rect,
     pub platforms: [graphics::Rect;2],
     pub star_location: (f32,f32),//Supposed to be a Point2, but having an errors
-
-    // pub obstacles: Obstacles,
 }
 
 impl Map {

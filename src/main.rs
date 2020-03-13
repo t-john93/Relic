@@ -49,7 +49,7 @@ impl EventHandler for PlayerState {
         }
         self.player_physics.get_x_pos();
         self.player_physics.get_y_pos();
-        if (self.player_physics.x_pos, self.player_physics.y_pos) == self.obstacles.star_location {
+        if (self.player_physics.x_pos, self.player_physics.y_pos) == self.map_model.star_location {
             self.win = true;
         }
         Ok(())

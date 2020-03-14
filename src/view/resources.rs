@@ -11,7 +11,7 @@ impl Resources {
         let mut resources: Resources = Resources {
             character_sprite: Vec::new(),
             star: Image::new(ctx, "/images/star.png").unwrap(),
-            game_over: Image::new(ctx, "/images/game_over.1.png").unwrap(),
+            game_over: Image::new(ctx, "/images/image.png").unwrap(),
         };
 
         resources.character_sprite.insert(

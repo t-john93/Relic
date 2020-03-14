@@ -5,7 +5,7 @@ use super::map;
 pub const MIN_Y_POS: f32 = 500.0;
 pub const X_VELOCITY: f32 = 3.0;
 pub const GRAVITY: f32 = 0.5;
-pub const FREEFALL: f32 = -12.0;
+pub const FREEFALL: f32 = -10.0;
 pub const DIRECTION: f32 = 1.0;
 
 pub struct Engine {
@@ -91,6 +91,15 @@ impl Engine {
                 }
                 return true;
             }
+            if  ((map.platforms[1].left()-5.0..map.platforms[1].left()).contains(&(self.x_pos - 16.))
+                || (map.platforms[1].right()..map.platforms[1].right()+5.0).contains(&(self.x_pos + 16.)))
+                && (map.platforms[1].top()..map.platforms[1].bottom()).contains(&(self.y_pos+32.)) {
+                    if !self.sliding {
+                        self.x_velocity = 0.0;
+                    }
+                return true;
+            }
+
         }
         return false;
     }

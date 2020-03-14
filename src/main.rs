@@ -1,5 +1,5 @@
 use event::{run, EventHandler, KeyCode, KeyMods};
-use ggez::{conf, event, Context, ContextBuilder, GameResult};
+use ggez::{conf, event, Context, ContextBuilder, GameResult,};
 use std::env;
 use std::path;
 
@@ -34,9 +34,11 @@ impl PlayerState {
             map_model: map::Map::construct_new(),
             resources: view::Resources::new(ctx),
             win: false,
+
         };
         Ok(s)
     }
+
 }
 
 impl EventHandler for PlayerState {
@@ -52,8 +54,8 @@ impl EventHandler for PlayerState {
             self.player_physics.check_turnaround(self.map_model);
         }
 
-        if (self.player_physics.x_pos < self.map_model.star_location.x)
-            && (self.player_physics.y_pos <= self.map_model.star_location.y)
+        if ((self.map_model.star_location.x-16.0)..(self.map_model.star_location.x+16.0)).contains(&(self.player_physics.x_pos))
+            && ((self.map_model.star_location.y-16.0)..(self.map_model.star_location.y-16.0)).contains(&(self.player_physics.y_pos))
         {
             self.win = true;
         }
@@ -99,6 +101,7 @@ impl EventHandler for PlayerState {
             view::render_win(self, ctx)
         }
     }
+    
 }
 
 pub fn main() -> GameResult {
@@ -114,6 +117,14 @@ pub fn main() -> GameResult {
         .window_setup(conf::WindowSetup::default().title("Relic"))
         .window_mode(conf::WindowMode::default().dimensions(WIN_WIDTH, WIN_HEIGHT));
     let (ctx, event_loop) = &mut cb.build()?;
-    let state = &mut PlayerState::new(ctx)?;
+    let mut state = &mut PlayerState::new(ctx)?;
+    
+    // if state.win {
+    //     let delay = Duration::new(3, 0);
+    //     timer::sleep(delay);
+    //     state = &mut PlayerState::new(ctx)?;
+    // }
+
+
     run(ctx, event_loop, state)
 }

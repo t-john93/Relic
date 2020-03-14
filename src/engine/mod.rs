@@ -91,15 +91,20 @@ impl Engine {
                 }
                 return true;
             }
-            if  ((map.platforms[1].left()-5.0..map.platforms[1].left()).contains(&(self.x_pos - 16.))
-                || (map.platforms[1].right()..map.platforms[1].right()+5.0).contains(&(self.x_pos + 16.)))
-                && (map.platforms[1].top()..map.platforms[1].bottom()).contains(&(self.y_pos+32.)) {
+            if  (230.0..235.0).contains(&(self.x_pos - 16.))
+                && (map.platforms[1].top()..map.platforms[1].bottom()+10.0).contains(&(self.y_pos)) {
                     if !self.sliding {
                         self.x_velocity = 0.0;
                     }
                 return true;
             }
-
+            if (265.0..270.).contains(&(self.x_pos + 16.))
+                && (map.platforms[1].top()..map.platforms[1].bottom()+10.0).contains(&(self.y_pos)) {
+                    if !self.sliding {
+                        self.x_velocity = 0.0;
+                    }
+                return true;
+            }
         }
         return false;
     }

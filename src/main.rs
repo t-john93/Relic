@@ -1,7 +1,8 @@
 use event::{run, EventHandler, KeyCode, KeyMods};
-use ggez::{conf, event, Context, ContextBuilder, GameResult};
+use ggez::{conf, event, Context, ContextBuilder, GameResult,};
 use std::env;
 use std::path;
+// use std::time::Duration;
 
 mod engine;
 mod map;
@@ -53,8 +54,8 @@ impl EventHandler for PlayerState {
             self.player_physics.check_turnaround(self.map_model);
         }
 
-        if (self.player_physics.x_pos < self.map_model.star_location.x)
-            && (self.player_physics.y_pos <= self.map_model.star_location.y)
+        if ((self.map_model.star_location.x-16.0)..(self.map_model.star_location.x+16.0)).contains(&(self.player_physics.x_pos))
+            && ((self.map_model.star_location.y-16.0)..(self.map_model.star_location.y-16.0)).contains(&(self.player_physics.y_pos))
         {
             self.win = true;
         }
@@ -92,14 +93,27 @@ impl EventHandler for PlayerState {
             _ => (),
         }
     }
+// fn resetgame(&mut self, ctx: &mut Context) {
+//         view::render_win(self, ctx);
+//         let delay = Duration::new(3, 0); // 3s
+//         timer::sleep(delay);
+//         self.player_physics.x_pos = 30.0;
+//         self.player_physics.y_pos = 400.0;
+//         self.win = false;
+//         self.player_physics.gravity = false;
+//         self.player_physics.direction = 1.0;
 
+
+//     }
     fn draw(&mut self, ctx: &mut Context) -> GameResult {
         if !self.win {
             view::render_game(self, ctx)
         } else {
+            // resetgame(self, ctx)
             view::render_win(self, ctx)
         }
     }
+    
 }
 
 pub fn main() -> GameResult {
@@ -115,7 +129,13 @@ pub fn main() -> GameResult {
         .window_setup(conf::WindowSetup::default().title("Relic"))
         .window_mode(conf::WindowMode::default().dimensions(WIN_WIDTH, WIN_HEIGHT));
     let (ctx, event_loop) = &mut cb.build()?;
-    let state = &mut PlayerState::new(ctx)?;
+    let mut state = &mut PlayerState::new(ctx)?;
+    
+    // if state.win {
+    //     let delay = Duration::new(3, 0);
+    //     timer::sleep(delay);
+    //     state = &mut PlayerState::new(ctx)?;
+    // }
 
 
     run(ctx, event_loop, state)

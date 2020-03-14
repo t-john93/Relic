@@ -5,7 +5,7 @@ pub const MAX_X_POS: f32 = 780.0;
 pub const MIN_Y_POS: f32 = 500.0;
 pub const X_VELOCITY: f32 = 3.0;
 pub const GRAVITY: f32 = 0.5;
-pub const FREEFALL: f32 = -12.0;
+pub const FREEFALL: f32 = -10.0;
 pub const DIRECTION: f32 = 1.0;
 
 pub struct Engine {

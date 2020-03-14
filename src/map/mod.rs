@@ -22,7 +22,7 @@ impl Map {
                 graphics::Rect::new(0.0, 300.0, 700.0, 75.0), //Lower block
                 graphics::Rect::new(250.0, 120.0, 30.0, 100.0), //upper block
             ],
-            star_location: na::Point2::new(170.0, 75.0),
+            star_location: na::Point2::new(330.0, 75.0),
         };
         map
     }

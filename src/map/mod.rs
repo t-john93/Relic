@@ -12,7 +12,7 @@ pub struct Map {
 
 impl Map {
     pub fn construct_new() -> Map {
-        let map = Map {
+        Map {
             ground: graphics::Rect::new(0.0, 520.0, 820.0, 80.0),
             ceiling: graphics::Rect::new(0.0, 0.0, 820.0, 50.0),
             l_wall: graphics::Rect::new(0.0, 0.0, 40.0, 800.0),
@@ -22,7 +22,6 @@ impl Map {
                 graphics::Rect::new(0.0, 0.0, 0.0, 0.0),
             ],
             star_location: na::Point2::new(50.0, 150.0),
-        };
-        map
+        }
     }
 }

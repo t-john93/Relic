@@ -30,7 +30,7 @@ impl Engine {
         slide: bool,
         offset: f32,
     ) -> Engine {
-        let engine = Engine {
+        Engine {
             x_pos: x,
             y_pos: y,
             x_velocity: xv,
@@ -40,8 +40,7 @@ impl Engine {
             grounded: on_ground,
             sliding: slide,
             player_offset: offset,
-        };
-        engine
+        }
     }
 
     pub fn get_x_pos(&mut self) {
@@ -82,7 +81,8 @@ impl Engine {
                 return true;
             }
             if (self.x_pos > 680.0 && self.x_pos < 685.0)
-                && (self.y_pos > map.platforms[0].y && self.y_pos < (map.platforms[0].y + map.platforms[0].h))
+                && (self.y_pos > map.platforms[0].y
+                    && self.y_pos < (map.platforms[0].y + map.platforms[0].h))
             {
                 if !self.sliding {
                     self.x_velocity = 0.0;
@@ -90,7 +90,7 @@ impl Engine {
                 return true;
             }
         }
-        return false;
+        false
     }
 
     pub fn check_ground(&mut self, map: map::Map) {
@@ -104,11 +104,12 @@ impl Engine {
     }
 
     pub fn check_lower_platform(&mut self, map: map::Map) {
-        if self.x_pos <= map.platforms[0].w {
-            if (self.y_pos >= map.platforms[0].y) && (self.y_pos <= map.platforms[0].y + 20.0) {
-                self.grounded = true;
-                self.y_pos = map.platforms[0].y - 20.0;
-            }
+        if (self.x_pos <= map.platforms[0].w)
+            && (self.y_pos >= map.platforms[0].y)
+            && (self.y_pos <= map.platforms[0].y + 20.0)
+        {
+            self.grounded = true;
+            self.y_pos = map.platforms[0].y - 20.0;
         }
     }
 

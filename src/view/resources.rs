@@ -23,6 +23,6 @@ impl Resources {
             Image::new(ctx, "/images/character_sprite_left.png").unwrap(),
         );
 
-        return resources;
+        resources
     }
 }

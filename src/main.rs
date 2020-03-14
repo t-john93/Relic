@@ -1,5 +1,5 @@
 use event::{run, EventHandler, KeyCode, KeyMods};
-use ggez::{conf, event, Context, ContextBuilder, GameResult,};
+use ggez::{conf, event, Context, ContextBuilder, GameResult};
 use std::env;
 use std::path;
 
@@ -7,7 +7,7 @@ mod engine;
 mod map;
 mod view;
 
-pub const WIN_WIDTH: f32 = 1000.0;
+pub const WIN_WIDTH: f32 = 870.0;
 pub const WIN_HEIGHT: f32 = 600.0;
 pub const PLAYER_START_X: f32 = 30.0;
 pub const PLAYER_START_Y: f32 = 400.0;
@@ -37,11 +37,9 @@ impl PlayerState {
             map_model: map::Map::construct_new(),
             resources: view::Resources::new(ctx),
             win: false,
-
         };
         Ok(s)
     }
-
 }
 
 impl EventHandler for PlayerState {
@@ -104,7 +102,6 @@ impl EventHandler for PlayerState {
             view::render_win(self, ctx)
         }
     }
-    
 }
 
 pub fn main() -> GameResult {

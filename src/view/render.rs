@@ -4,9 +4,7 @@ use ggez::{graphics, nalgebra as na, Context, GameResult};
 pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameResult {
     graphics::clear(ctx, [0.1, 0.2, 0.3, 1.0].into());
 
-    let instructions = graphics::Text::new(
-        "Space to jump, Reach star to win".to_string(),
-    );
+    let instructions = graphics::Text::new("Space to jump, Reach star to win".to_string());
 
     // Create border
     let ground = graphics::Mesh::new_rectangle(
@@ -44,7 +42,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
             graphics::BLACK,
         )?;
         graphics::draw(ctx, &obs, (na::Point2::new(0.0, 0.0),))?;
-        i = i + 1;
+        i += 1;
     }
 
     // Draw the star
@@ -83,7 +81,7 @@ pub fn render_game(player_state: &mut PlayerState, ctx: &mut Context) -> GameRes
     graphics::draw(ctx, &ceiling, (na::Point2::new(0.0, 0.0),))?;
     graphics::draw(ctx, &l_wall, (na::Point2::new(0.0, 0.0),))?;
     graphics::draw(ctx, &r_wall, (na::Point2::new(0.0, 0.0),))?;
-    graphics::draw(ctx, &instructions, (na::Point2::new(0.0,0.0),))?;
+    graphics::draw(ctx, &instructions, (na::Point2::new(0.0, 0.0),))?;
     graphics::present(ctx)?;
 
     Ok(())

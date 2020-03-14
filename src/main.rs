@@ -2,7 +2,6 @@ use event::{run, EventHandler, KeyCode, KeyMods};
 use ggez::{conf, event, Context, ContextBuilder, GameResult,};
 use std::env;
 use std::path;
-// use std::time::Duration;
 
 mod engine;
 mod map;
@@ -93,23 +92,11 @@ impl EventHandler for PlayerState {
             _ => (),
         }
     }
-// fn resetgame(&mut self, ctx: &mut Context) {
-//         view::render_win(self, ctx);
-//         let delay = Duration::new(3, 0); // 3s
-//         timer::sleep(delay);
-//         self.player_physics.x_pos = 30.0;
-//         self.player_physics.y_pos = 400.0;
-//         self.win = false;
-//         self.player_physics.gravity = false;
-//         self.player_physics.direction = 1.0;
 
-
-//     }
     fn draw(&mut self, ctx: &mut Context) -> GameResult {
         if !self.win {
             view::render_game(self, ctx)
         } else {
-            // resetgame(self, ctx)
             view::render_win(self, ctx)
         }
     }

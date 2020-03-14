@@ -54,8 +54,8 @@ impl EventHandler for PlayerState {
             self.player_physics.check_turnaround(self.map_model);
         }
 
-        if ((self.map_model.star_location.x-16.0)..(self.map_model.star_location.x+16.0)).contains(&(self.player_physics.x_pos))
-            && ((self.map_model.star_location.y-16.0)..(self.map_model.star_location.y-16.0)).contains(&(self.player_physics.y_pos))
+        if (self.player_physics.x_pos < self.map_model.star_location.x)
+            && (self.player_physics.y_pos <= self.map_model.star_location.y)
         {
             self.win = true;
         }

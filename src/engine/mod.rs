@@ -1,7 +1,5 @@
 use super::map;
 
-// pub const MIN_X_POS: f32 = 20.0;
-// pub const MAX_X_POS: f32 = 780.0;
 pub const MIN_Y_POS: f32 = 500.0;
 pub const X_VELOCITY: f32 = 3.0;
 pub const GRAVITY: f32 = 0.5;
@@ -84,25 +82,11 @@ impl Engine {
                 return true;
             }
             if (self.x_pos > 680.0 && self.x_pos < 685.0)
-                && (self.y_pos > 300.0 && self.y_pos < 350.0)
+                && (self.y_pos > map.platforms[0].y && self.y_pos < (map.platforms[0].y + map.platforms[0].h))
             {
                 if !self.sliding {
                     self.x_velocity = 0.0;
                 }
-                return true;
-            }
-            if  (230.0..235.0).contains(&(self.x_pos - 16.))
-                && (map.platforms[1].top()..map.platforms[1].bottom()+10.0).contains(&(self.y_pos)) {
-                    if !self.sliding {
-                        self.x_velocity = 0.0;
-                    }
-                return true;
-            }
-            if (265.0..270.).contains(&(self.x_pos + 16.))
-                && (map.platforms[1].top()..map.platforms[1].bottom()+10.0).contains(&(self.y_pos)) {
-                    if !self.sliding {
-                        self.x_velocity = 0.0;
-                    }
                 return true;
             }
         }

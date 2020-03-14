@@ -9,6 +9,9 @@ mod view;
 
 pub const WIN_WIDTH: f32 = 1000.0;
 pub const WIN_HEIGHT: f32 = 600.0;
+pub const PLAYER_START_X: f32 = 30.0;
+pub const PLAYER_START_Y: f32 = 400.0;
+pub const PLAYER_POSITION_OFFSET: f32 = 32.0;
 
 pub struct PlayerState {
     player_physics: engine::Engine,
@@ -21,15 +24,15 @@ impl PlayerState {
     fn new(ctx: &mut Context) -> GameResult<PlayerState> {
         let s = PlayerState {
             player_physics: engine::Engine::construct_new(
-                30.0,
-                400.0,
+                PLAYER_START_X,
+                PLAYER_START_Y,
                 engine::X_VELOCITY,
                 0.0,
                 engine::GRAVITY,
                 engine::DIRECTION,
                 false,
                 false,
-                32.0,
+                PLAYER_POSITION_OFFSET,
             ),
             map_model: map::Map::construct_new(),
             resources: view::Resources::new(ctx),
@@ -117,14 +120,6 @@ pub fn main() -> GameResult {
         .window_setup(conf::WindowSetup::default().title("Relic"))
         .window_mode(conf::WindowMode::default().dimensions(WIN_WIDTH, WIN_HEIGHT));
     let (ctx, event_loop) = &mut cb.build()?;
-    let mut state = &mut PlayerState::new(ctx)?;
-    
-    // if state.win {
-    //     let delay = Duration::new(3, 0);
-    //     timer::sleep(delay);
-    //     state = &mut PlayerState::new(ctx)?;
-    // }
-
-
+    let state = &mut PlayerState::new(ctx)?;
     run(ctx, event_loop, state)
 }

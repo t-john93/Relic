@@ -13,14 +13,13 @@ pub struct Map {
 impl Map {
     pub fn construct_new() -> Map {
         let map = Map {
-            // TODO: read map values from file
             ground: graphics::Rect::new(0.0, 520.0, 820.0, 80.0),
             ceiling: graphics::Rect::new(0.0, 0.0, 820.0, 50.0),
             l_wall: graphics::Rect::new(0.0, 0.0, 40.0, 800.0),
             r_wall: graphics::Rect::new(820.0, 0.0, 50.0, 800.0),
             platforms: [
-                graphics::Rect::new(0.0, 300.0, 700.0, 75.0), //Lower block
-                graphics::Rect::new(0.0, 0.0, 0.0, 0.0), //upper block
+                graphics::Rect::new(0.0, 300.0, 700.0, 75.0),
+                graphics::Rect::new(0.0, 0.0, 0.0, 0.0),
             ],
             star_location: na::Point2::new(50.0, 150.0),
         };
